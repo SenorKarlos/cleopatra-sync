@@ -1,0 +1,16 @@
+[source_db]
+host = "source_db_host"
+port = 3306
+user = "source_db_user"
+password = "source_db_password"
+db = "cleopatra"
+
+[destination_db]
+host = "destination_db_host"
+port = 3306
+user = "destination_db_user"
+password = "destination_db_password"
+db = "dragonite"
+
+[discord]
+webhook_url = "https://discord.com/api/webhooks/your_webhook_url"
