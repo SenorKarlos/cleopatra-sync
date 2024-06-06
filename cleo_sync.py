@@ -74,7 +74,7 @@ def sync_data():
             if activated == 1:
                 # Insert into destination
                 activated_count += 1
-                dest_query = ("INSERT INTO account (username, password, provider, refresh_token) "
+                dest_query = ("INSERT IGNORE INTO account (username, password, provider, refresh_token) "
                               "VALUES (%s, %s, 'nk', %s)")
                 dest_cursor.execute(dest_query, (username, password, refresh_token))
             else:
@@ -85,7 +85,7 @@ def sync_data():
             account_id, username, password, refresh_token = row
             activated_count += 1
             # Insert into destination
-            dest_query = ("INSERT INTO account (username, password, provider, refresh_token) "
+            dest_query = ("INSERT IGNORE INTO account (username, password, provider, refresh_token) "
                           "VALUES (%s, %s, 'nk', %s)")
             dest_cursor.execute(dest_query, (username, password, refresh_token))
             # Remove from pending activations
