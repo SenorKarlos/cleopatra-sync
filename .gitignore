@@ -4,4 +4,3 @@ env/
 venv/
 config.toml
 sync_state.json
-pending_activations.json
