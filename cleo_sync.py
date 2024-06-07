@@ -41,14 +41,14 @@ def sync_data():
     source_cursor = source_conn.cursor()
     
     # Get all records from source
-    source_query = "SELECT id, username, password, refresh_token, activated FROM accounts"
+    source_query = "SELECT username, password, activated FROM accounts"
     source_cursor.execute(source_query)
     rows = source_cursor.fetchall()
     
     total_created = len(rows)
     created_count = total_created - total_created_prev
 
-    activated_rows = [row for row in rows if row[4] == 1]  # Filter where activated = 1
+    activated_rows = [row for row in rows if row[2] == 1]  # Filter where activated = 1
     total_activated = len(activated_rows)
     activated_count = total_activated - total_activated_prev
     
@@ -58,11 +58,11 @@ def sync_data():
         dest_cursor = dest_conn.cursor()
         
         for row in activated_rows:
-            username, password, refresh_token = row[1], row[2], row[3]
+            username, password = row[0], row[1]
             # Insert into destination
-            dest_query = ("INSERT IGNORE INTO account (username, password, provider, refresh_token) "
-                          "VALUES (%s, %s, 'nk', %s)")
-            dest_cursor.execute(dest_query, (username, password, refresh_token))
+            dest_query = ("INSERT IGNORE INTO account (username, password, provider) "
+                          "VALUES (%s, %s, 'nk')")
+            dest_cursor.execute(dest_query, (username, password))
         
         dest_conn.commit()
         
