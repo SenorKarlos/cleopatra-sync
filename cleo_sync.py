@@ -80,11 +80,11 @@ def sync_data():
     save_state(state_file, state)
     
     # Send Discord notification
-    send_discord_notification(state, created_count, activated_count)
+    send_discord_notification(total_created_prev, state, created_count, activated_count)
 
 # Function to send Discord notification
-def send_discord_notification(state, hourly_created, hourly_activated):
-    if 'total_created' not in state or 'total_activated' not in state:
+def send_discord_notification(total_created_prev, state, hourly_created, hourly_activated):
+    if total_created_prev == 0:
         hourly_created_msg = "First Run - N/A"
         hourly_activated_msg = "First Run - N/A"
     else:
@@ -100,8 +100,10 @@ def send_discord_notification(state, hourly_created, hourly_activated):
                 "url": "https://archives.bulbagarden.net/media/upload/thumb/1/1c/0149Dragonite.png/250px-0149Dragonite.png"
             },
             "fields": [
+                {"name": ":calendar_spiral: **Lifetime Statistics**", "value": "----------------------"},
                 {"name": "Lifetime Created", "value": str(state['total_created']), "inline": True},
                 {"name": "Lifetime Activated/Sent", "value": str(state['total_activated']), "inline": True},
+                {"name": ":clock1: **Hourly Statistics**", "value": "----------------------"},
                 {"name": "Hourly Created", "value": hourly_created_msg, "inline": True},
                 {"name": "Hourly Activated/Sent", "value": hourly_activated_msg, "inline": True}
             ],
