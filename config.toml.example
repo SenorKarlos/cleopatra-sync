@@ -1,16 +1,23 @@
 [source_db]
-host = "source_db_host"
+host = ""  # Hostname or IP address. Always required.
 port = 3306
-user = "source_db_user"
-password = "source_db_password"
-db = "cleopatra"
+user = ""
+password = ""
+db = "cleopatra"  # Database name
 
+## Note - one of destination db host or discord webhook are required for operation
 [destination_db]
-host = "destination_db_host"
+host = ""  # Hostname or IP address. Leave empty and set discord webhook for stats only
 port = 3306
-user = "destination_db_user"
-password = "destination_db_password"
-db = "dragonite"
+user = ""
+password = ""
+db = "dragonite"  # Database name
 
 [discord]
-webhook_url = "https://discord.com/api/webhooks/your_webhook_url"
+webhook_url = ""  # Discord webhook URL. Leave empty to disable stats posting
+
+[dragonite]
+api_url = ""  # Dragonite API or Admin address "http(s)://dragonite_address(:port)" - no slash, leave empty to disable reload entirely
+use_admin = false  # Whether to use the admin endpoint
+admin_secret = ""  # Admin secret for authorization, leave empty if not needed
+reload_every_run = false  # Whether to reload Dragonite every run or only when new accounts activated/sent
